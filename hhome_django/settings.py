@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'hhome_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hhome_django',
+        'USER': 'hhome_user',
+        'PASSWORD': os.environ['POSTGRES_DB'],
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
