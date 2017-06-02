@@ -2,6 +2,25 @@ from django.core.urlresolvers import reverse
 from django.db import models
 import field_details
 
+class Address(models.Model):
+    """Addresses for users of website."""
+
+    apartment = models.CharField(max_length=6), null=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+    standard_address = models.CharField(max_length=150), null=True)
+    address_street_num = models.CharField(max_length=10), null=True)
+    address_street = models.CharField(max_length=50), null=True)
+    address_city = models.CharField(max_length=50), null=True)
+    address_state = field_details.USStateField(null=True)
+    address_zip = models.CharField(max_length=50), null=True)
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Address address_id=%s address=%s>" % (self.address_id, self.standard_address)
+
 class Chore(models.Model):
     """Chore model"""
     #ID is generated automatically
