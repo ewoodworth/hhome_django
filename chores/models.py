@@ -5,7 +5,7 @@ import field_details
 class Address(models.Model):
     """Addresses for users of website."""
 
-    apartment = models.CharField(max_length=6), null=True)
+    apartment = models.CharField(max_length=6, null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     standard_address = models.CharField(max_length=150), null=True)
@@ -33,7 +33,7 @@ class Chore(models.Model):
     #https://stackoverflow.com/questions/5966629/django-days-of-week-representation-in-model
     date_monthly = models.CharField(max_length=2, null=True)
     by_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-    # comment = db.Column(db.String(15), nullable=True)
+    # comment = models.CharField(max_length=15), nullable=True)
 
     class Meta:
         verbose_name = 'chore'
@@ -57,4 +57,22 @@ class Chore(models.Model):
             monthly_hours = len(self.days_weekly.split("|")) * 4 * self.duration_minutes
         elif self.occurance == '3':
             monthly_hours = self.duration_minutes
-        return (monthly_hours)    
+        return (monthly_hours)
+
+class User(db.Model):
+    """User model"""
+
+    email = models.CharField(max_length=50), nullable=True)
+    # fb_id =  models.CharField(max_length=50), nullable=True)
+    password = models.CharField(max_length=25), nullable=True)
+    name = models.CharField(max_length=50), nullable=True)
+    lname = models.CharField(max_length=50), nullable=True)
+    phone_number = models.CharField(max_length=15), nullable=True)
+    avatar_src = models.CharField(max_length=30), nullable=True)
+    address = models.ForeignKey(Address)
+    chores = models.ForeignKey(Chore)
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
