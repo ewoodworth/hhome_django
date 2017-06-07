@@ -59,7 +59,7 @@ class Chore(models.Model):
             monthly_hours = self.duration_minutes
         return (monthly_hours)
 
-class User(db.Model):
+class User(models.Model):
     """User model"""
 
     email = models.CharField(max_length=50), nullable=True)
@@ -76,3 +76,9 @@ class User(db.Model):
         """Provide helpful representation when printed."""
 
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+
+class Contribution(models.Model):
+    """User contribution to household labor"""
+    user = models.ForeignKey(User)
+    chore = models.ForeignKey(Chore)
+    contribution = 
