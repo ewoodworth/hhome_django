@@ -62,13 +62,13 @@ class Chore(models.Model):
 class User(models.Model):
     """User model"""
 
-    email = models.CharField(max_length=50), nullable=True)
+    email = models.CharField(max_length=50, nullable=True)
     # fb_id =  models.CharField(max_length=50), nullable=True)
-    password = models.CharField(max_length=25), nullable=True)
-    name = models.CharField(max_length=50), nullable=True)
-    lname = models.CharField(max_length=50), nullable=True)
-    phone_number = models.CharField(max_length=15), nullable=True)
-    avatar_src = models.CharField(max_length=30), nullable=True)
+    password = models.CharField(max_length=25, nullable=True)
+    name = models.CharField(max_length=50, nullable=True)
+    lname = models.CharField(max_length=50, nullable=True)
+    phone_number = models.CharField(max_length=15, nullable=True)
+    avatar_src = models.CharField(max_length=30, nullable=True)
     address = models.ForeignKey(Address)
     chores = models.ForeignKey(Chore)
 
@@ -81,4 +81,4 @@ class Contribution(models.Model):
     """User contribution to household labor"""
     user = models.ForeignKey(User)
     chore = models.ForeignKey(Chore)
-    contribution = 
+    contribution = models.CharField(max_length=50, nullable=True)
