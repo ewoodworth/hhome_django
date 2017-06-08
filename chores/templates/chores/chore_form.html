@@ -1,0 +1,20 @@
+{% extends parent_template|default:"chores/base_chore.html" %}
+
+{% block title %}
+{{ block.super }} - Create Chore
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{% url 'chores_chore_create' %}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+          Create Tag</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
