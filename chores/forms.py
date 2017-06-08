@@ -9,6 +9,9 @@ class ChoreForm(forms.ModelForm):
         model = Chore
         fields = '__all__'
 
+    def clean_name(self):
+        return self.cleaned_data['name'].lower()
+
 # class SlugCleanMixin:
 #     """Mixin class for slug cleaning method."""
 
