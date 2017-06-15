@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import NewsLink, Startup, Tag
+from .models import Chore, Contribution
 
 
 class ChoreForm(forms.ModelForm):
@@ -12,20 +12,20 @@ class ChoreForm(forms.ModelForm):
     def clean_name(self):
         return self.cleaned_data['name'].lower()
 
-# class SlugCleanMixin:
-#     """Mixin class for slug cleaning method."""
+class SlugCleanMixin:
+    """Mixin class for slug cleaning method."""
 
-#     def clean_slug(self):
-#         new_slug = (
-#             self.cleaned_data['slug'].lower())
-#         if new_slug == 'create':
-#             raise ValidationError(
-#                 'Slug may not be "create".')
-#         return new_slug
+    def clean_slug(self):
+        new_slug = (
+            self.cleaned_data['slug'].lower())
+        if new_slug == 'create':
+            raise ValidationError(
+                'Slug may not be "create".')
+        return new_slug
 
 
-class TimeContributionForm(
+class ContributionForm(
         SlugCleanMixin, forms.ModelForm):
     class Meta:
-        model = TimeContribution
+        model = Contribution
         fields = '__all__'

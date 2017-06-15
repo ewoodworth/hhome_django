@@ -8,12 +8,12 @@ class Address(models.Model):
     apartment = models.CharField(max_length=6, null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
-    standard_address = models.CharField(max_length=150), null=True)
-    address_street_num = models.CharField(max_length=10), null=True)
-    address_street = models.CharField(max_length=50), null=True)
-    address_city = models.CharField(max_length=50), null=True)
+    standard_address = models.CharField(max_length=150, null=True)
+    address_street_num = models.CharField(max_length=10, null=True)
+    address_street = models.CharField(max_length=50, null=True)
+    address_city = models.CharField(max_length=50, null=True)
     address_state = field_details.USStateField(null=True)
-    address_zip = models.CharField(max_length=50), null=True)
+    address_zip = models.CharField(max_length=50, null=True)
 
 
     def __repr__(self):
@@ -62,15 +62,15 @@ class Chore(models.Model):
 class User(models.Model):
     """User model"""
 
-    email = models.CharField(max_length=50, nullable=True)
+    email = models.CharField(max_length=50, null=True)
     # fb_id =  models.CharField(max_length=50), nullable=True)
-    password = models.CharField(max_length=25, nullable=True)
-    name = models.CharField(max_length=50, nullable=True)
-    lname = models.CharField(max_length=50, nullable=True)
-    phone_number = models.CharField(max_length=15, nullable=True)
-    avatar_src = models.CharField(max_length=30, nullable=True)
+    password = models.CharField(max_length=25, null=True)
+    name = models.CharField(max_length=50, null=True)
+    lname = models.CharField(max_length=50, null=True)
+    phone_number = models.CharField(max_length=15, null=True)
+    avatar_src = models.CharField(max_length=30, null=True)
     address = models.ForeignKey(Address)
-    chores = models.ForeignKey(Chore)
+    # chores = models.ForeignKey(Chore)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -81,4 +81,4 @@ class Contribution(models.Model):
     """User contribution to household labor"""
     user = models.ForeignKey(User)
     chore = models.ForeignKey(Chore)
-    contribution = models.CharField(max_length=50, nullable=True)
+    contribution = models.CharField(max_length=50, null=True)

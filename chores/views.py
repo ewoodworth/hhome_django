@@ -4,15 +4,15 @@ from django.shortcuts import (
 from django.views.generic import View
 
 from .forms import (
-    NewsLinkForm, StartupForm, TagForm)
-from .models import NewsLink, Startup, Tag
+    ChoreForm, ContributionForm)
+from .models import Chore
 from .utils import (
     ObjectCreateMixin, ObjectDeleteMixin,
     ObjectUpdateMixin)
 
 class ChoreCreate(ObjectCreateMixin, View):
     form_class = ChoreForm
-    template_name = 'chores/chore_form.html'
+    template_name = ('chores/chore_form.html')
 
 class ChoreDelete(View):
 
@@ -30,6 +30,21 @@ class ChoreDelete(View):
         startup = newslink.startup
         newslink.delete()
         return redirect(startup)
+
+def chore_detail(request, slug):
+    chore = get_object_or_404(
+        Chore, slug__iexact=slug)
+    return render(
+        request,
+        'chores/chore_detail.html',
+        {'chore': chore})
+
+
+def chore_list(request):
+    return render(
+        request,
+        'chores/chore_list.html',
+        {'chore_list': Chore.objects.all()})
 
 class ChoreUpdate(View):
     form_class = ChoreForm
