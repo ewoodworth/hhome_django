@@ -1,5 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import field_details
 
 class Address(models.Model):
@@ -59,23 +62,20 @@ class Chore(models.Model):
             monthly_hours = self.duration_minutes
         return (monthly_hours)
 
-class User(models.Model):
-    """User model"""
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    location = models.CharField(max_length=30, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
 
-    email = models.CharField(max_length=50, null=True)
-    # fb_id =  models.CharField(max_length=50), nullable=True)
-    password = models.CharField(max_length=25, null=True)
-    name = models.CharField(max_length=50, null=True)
-    lname = models.CharField(max_length=50, null=True)
-    phone_number = models.CharField(max_length=15, null=True)
-    avatar_src = models.CharField(max_length=30, null=True)
-    address = models.ForeignKey(Address)
-    # chores = models.ForeignKey(Chore)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class Contribution(models.Model):
     """User contribution to household labor"""
